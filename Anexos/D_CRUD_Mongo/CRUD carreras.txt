@@ -1,0 +1,22 @@
+--CREATE--
+
+db.Carreras.insertOne({ _id: "car10", nombre: "Ingeniería Informática", duracion_semestres: 8, sede: "San Joaquín" });
+
+db.Carreras.insertOne({ _id: "car11", nombre: "Analista Programador", duracion_semestres: 4, sede: "Maipú" });
+
+--READ--
+db.Carreras.findOne({ _id: "car10" });
+
+db.Carreras.find({ duracion_semestres: { $gte: 4 } }, { _id: 1, nombre: 1, duracion_semestres: 1 });
+
+
+--UPDATE--
+db.Carreras.updateOne({ _id: "car10" }, { $set: { sede: "Providencia" } });
+
+db.Carreras.updateOne({ _id: "car11" }, { $inc: { duracion_semestres: 1 } });
+
+
+--DELETE--
+db.Carreras.deleteOne({ _id: "car10" });
+
+db.Carreras.deleteOne({ _id: "car11" });

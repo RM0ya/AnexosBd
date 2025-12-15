@@ -1,0 +1,226 @@
+CREATE OR REPLACE PACKAGE pkg_gestion_academica AS
+    
+    PROCEDURE calcular_promedio_estudiante (
+        p_id_estudiante IN NUMBER
+    );
+    
+    PROCEDURE generar_alertas_morosidad;
+    
+    PROCEDURE inscribir_asignaturas_automatico (
+        p_id_estudiante IN NUMBER
+    );
+    PROCEDURE reporte_morosidad_detalle;
+
+END pkg_gestion_academica;
+/
+CREATE OR REPLACE PACKAGE BODY pkg_gestion_academica AS
+PROCEDURE calcular_promedio_estudiante (
+        p_id_estudiante IN NUMBER
+    )
+    IS
+        v_promedio NUMBER;
+    BEGIN
+        SELECT AVG(calificacion)
+        INTO v_promedio
+        FROM nota
+        WHERE id_estudiante = p_id_estudiante
+        AND calificacion IS NOT NULL;
+
+        DBMS_OUTPUT.PUT_LINE('📘 Promedio final del estudiante ' 
+                             || p_id_estudiante || ' = ' || v_promedio);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            DBMS_OUTPUT.PUT_LINE('⚠️ El estudiante no tiene notas registradas.');
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('❌ Error: ' || SQLERRM);
+    END calcular_promedio_estudiante;
+    
+    PROCEDURE generar_alertas_morosidad
+    IS
+    BEGIN
+        FOR r IN (
+            SELECT m.id_estudiante, e.nombres, e.apellidos,
+                   SUM(p.monto) AS PAGADO
+            FROM matricula m
+            LEFT JOIN pago p ON m.id_matricula = p.id_matricula
+            JOIN estudiante e ON e.id_estudiante = m.id_estudiante
+            GROUP BY m.id_estudiante, e.nombres, e.apellidos
+            HAVING SUM(p.monto) < 1000000  -- monto referencial
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE('🚨 Estudiante moroso: ' 
+                                 || r.id_estudiante || ' - '
+                                 || r.nombres || ' ' || r.apellidos
+                                 || ' | Total pagado: ' || r.pagado);
+        END LOOP;
+    END generar_alertas_morosidad;
+    PROCEDURE inscribir_asignaturas_automatico (
+        p_id_estudiante IN NUMBER
+    )
+    IS
+        v_id_carrera NUMBER;
+        v_contador NUMBER := 0;
+    BEGIN
+        SELECT id_carrera
+        INTO v_id_carrera
+        FROM matricula
+        WHERE id_estudiante = p_id_estudiante
+        AND ROWNUM = 1;
+
+        INSERT INTO nota (id_nota, id_estudiante, id_asignatura, evaluacion, calificacion)
+        SELECT seq_nota.NEXTVAL, p_id_estudiante, a.id_asignatura,
+               'Pendiente', NULL
+        FROM asignatura a
+        WHERE a.id_carrera = v_id_carrera
+        AND NOT EXISTS (
+            SELECT 1 FROM nota n
+            WHERE n.id_estudiante = p_id_estudiante
+            AND n.id_asignatura = a.id_asignatura
+        );
+
+        v_contador := SQL%ROWCOUNT;
+
+        DBMS_OUTPUT.PUT_LINE('✅ Se inscribieron ' || v_contador 
+                             || ' asignaturas al estudiante ' 
+                             || p_id_estudiante);
+
+        COMMIT;
+
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            DBMS_OUTPUT.PUT_LINE('⚠️ El estudiante no tiene matrícula registrada.');
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('❌ Error: ' || SQLERRM);
+            ROLLBACK;
+    END inscribir_asignaturas_automatico;
+    
+    PROCEDURE reporte_morosidad_detalle IS --Procedure con cursor
+    CURSOR c_morosos IS
+        SELECT m.id_matricula, m.id_estudiante, e.nombres, e.apellidos
+        FROM matricula m
+        JOIN estudiante e ON e.id_estudiante = m.id_estudiante;
+
+    CURSOR c_pagos (p_id_matricula NUMBER) IS
+        SELECT monto, fecha_pago
+        FROM pago
+        WHERE id_matricula = p_id_matricula;
+
+    v_total_pagado NUMBER;
+BEGIN
+    FOR r IN c_morosos LOOP
+        v_total_pagado := 0;
+
+        FOR p IN c_pagos(r.id_matricula) LOOP
+            v_total_pagado := v_total_pagado + NVL(p.monto,0);
+        END LOOP;
+
+        IF v_total_pagado < 1000000 THEN
+            DBMS_OUTPUT.PUT_LINE(
+                '🚨 Moroso: '||r.id_estudiante||' - '||
+                r.nombres||' '||r.apellidos||
+                ' | Total pagado: '||v_total_pagado
+            );
+        END IF;
+    END LOOP;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('❌ Error: '||SQLERRM);
+END reporte_morosidad_detalle;
+
+END pkg_gestion_academica;
+/
+
+CREATE OR REPLACE PACKAGE pkg_triggers_academicos AS
+    PROCEDURE prc_alerta_falta (
+        p_id_estudiante NUMBER,
+        p_fecha DATE
+    );
+
+    PROCEDURE prc_control_asistencia (
+        p_id_estudiante NUMBER
+    );
+
+    PROCEDURE prc_historial_academico (
+        p_id_estudiante NUMBER,
+        p_id_asignatura NUMBER,
+        p_nota NUMBER
+    );
+
+END pkg_triggers_academicos;
+/
+CREATE OR REPLACE PACKAGE BODY pkg_triggers_academicos AS
+    PROCEDURE prc_alerta_falta (
+        p_id_estudiante NUMBER,
+        p_fecha DATE
+    )
+    IS
+        v_nombre VARCHAR2(150);
+    BEGIN
+        SELECT nombres || ' ' || apellidos
+        INTO v_nombre
+        FROM estudiante
+        WHERE id_estudiante = p_id_estudiante;
+
+        DBMS_OUTPUT.PUT_LINE('⚠️ Falta: ' || v_nombre ||
+                             ' no asistió el ' ||
+                             TO_CHAR(p_fecha, 'DD-MM-YYYY'));
+    END prc_alerta_falta;
+    PROCEDURE prc_control_asistencia (
+        p_id_estudiante NUMBER
+    )
+    IS
+        v_total NUMBER;
+        v_presentes NUMBER;
+        v_porcentaje NUMBER;
+    BEGIN
+        SELECT COUNT(*)
+        INTO v_total
+        FROM asistencia
+        WHERE id_estudiante = p_id_estudiante;
+
+        SELECT COUNT(*)
+        INTO v_presentes
+        FROM asistencia
+        WHERE id_estudiante = p_id_estudiante
+        AND presente = 'S';
+
+        v_porcentaje := (v_presentes / v_total) * 100;
+
+        IF v_porcentaje < 70 THEN
+            DBMS_OUTPUT.PUT_LINE('🚨 ALERTA: Estudiante ' || p_id_estudiante ||
+                                 ' tiene asistencia de ' || ROUND(v_porcentaje,2) || '%');
+        END IF;
+        EXCEPTION
+        WHEN ZERO_DIVIDE THEN
+            DBMS_OUTPUT.PUT_LINE('⚠️ ZERO_DIVIDE: el estudiante no tiene registros de asistencia.');
+        WHEN NO_DATA_FOUND THEN
+            DBMS_OUTPUT.PUT_LINE('⚠️ NO_DATA_FOUND: no se encontró el estudiante/asistencia.');
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('❌ Error: ' || SQLERRM);
+    END prc_control_asistencia;
+    PROCEDURE prc_historial_academico (
+        p_id_estudiante NUMBER,
+        p_id_asignatura NUMBER,
+        p_nota NUMBER
+    )
+    IS
+        v_asignatura VARCHAR2(100);
+        v_estudiante VARCHAR2(150);
+    BEGIN
+        SELECT nombre_asignatura INTO v_asignatura
+        FROM asignatura
+        WHERE id_asignatura = p_id_asignatura;
+
+        SELECT nombres || ' ' || apellidos INTO v_estudiante
+        FROM estudiante
+        WHERE id_estudiante = p_id_estudiante;
+
+        DBMS_OUTPUT.PUT_LINE(
+            '📘 Historial: ' || v_estudiante ||
+            ' obtuvo nota ' || p_nota ||
+            ' en ' || v_asignatura
+        );
+    END prc_historial_academico;
+
+END pkg_triggers_academicos;
+/

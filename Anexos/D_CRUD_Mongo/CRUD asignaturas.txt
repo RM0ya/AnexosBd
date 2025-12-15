@@ -1,0 +1,22 @@
+--CREATE--
+db.Asignaturas.insertOne({ _id: "asi06", nombre: "Base de Datos", semestre: 3, carrera_id: "car01" });
+
+db.Asignaturas.insertOne({ _id: "asi07", nombre: "Programación Web", semestre: 4, carrera_id: "car01" });
+
+
+--READ--
+db.Asignaturas.findOne({ _id: "asi07" });
+
+db.Asignaturas.find({ carrera_id: "car01" }, { _id: 1, nombre: 1, semestre: 1 }).sort({ semestre: 1 });
+
+
+--UPDATE--
+
+db.Asignaturas.updateOne({ _id: "asi01" }, { $set: { semestre: 2 } });
+
+db.Asignaturas.updateOne({ _id: "asi02" }, { $set: { nombre: "Desarrollo Web" } });
+
+--DELETE--
+db.Asignaturas.deleteOne({ _id: "asi01" });
+
+db.Asignaturas.deleteOne({ _id: "asi02" });

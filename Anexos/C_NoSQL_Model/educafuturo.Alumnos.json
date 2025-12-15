@@ -1,0 +1,172 @@
+[{
+  "_id": "est01",
+  "rut": "20.345.777-6",
+  "nombre": "Javiera Riquelme",
+  "correo": "javiera.riquelme@alumnos.edu",
+  "telefono": "+56988823311",
+  "carrera_id": "car02",
+  "metodo_pago": "Tarjeta de crédito",
+  "beca": "Beca Nuevo Milenio",
+  "estado_morosidad": "Al día",
+  "horario": [
+    {
+      "asignatura_id": "asi01",
+      "asignatura": "Programación I",
+      "dia": "Lunes",
+      "hora_inicio": "09:00",
+      "hora_termino": "11:00",
+      "sala": "LAB-204",
+      "docente_id": "doc01"
+    },
+    {
+      "asignatura_id": "asi05",
+      "asignatura": "Bases de Datos I",
+      "dia": "Miércoles",
+      "hora_inicio": "10:00",
+      "hora_termino": "12:00",
+      "sala": "LAB-302",
+      "docente_id": "doc01"
+    },
+    {
+      "asignatura_id": "asi09",
+      "asignatura": "Ética Profesional",
+      "dia": "Jueves",
+      "hora_inicio": "14:00",
+      "hora_termino": "16:00",
+      "sala": "AULA-105",
+      "docente_id": "doc03"
+    }
+  ],
+  "historial_academico": [
+    {
+      "asignatura_id": "asi01",
+      "nombre": "Programación I",
+      "semestre": "2024-1",
+      "nota_final": 5.4,
+      "estado": "Aprobado"
+    },
+    {
+      "asignatura_id": "asi05",
+      "nombre": "Bases de Datos I",
+      "semestre": "2024-1",
+      "nota_final": null,
+      "estado": "Cursando"
+    }
+  ]
+},
+{
+  "_id": "est02",
+  "rut": "19.102.553-1",
+  "nombre": "Carlos Araya",
+  "correo": "carlos.araya@alumnos.edu",
+  "telefono": "+56991233411",
+  "carrera_id": "car03",
+  "metodo_pago": "Transferencia",
+  "beca": "Beca de Reparación",
+  "estado_morosidad": "No Moroso",
+  "horario": [
+    {
+      "asignatura_id": "asi02",
+      "asignatura": "Anatomía Humana",
+      "dia": "Martes",
+      "hora_inicio": "14:00",
+      "hora_termino": "17:00",
+      "sala": "ENF-101",
+      "docente_id": "doc02"
+    }
+  ],
+  "historial_academico": [
+    {
+      "asignatura_id": "asi02",
+      "nombre": "Anatomía Humana",
+      "semestre": "2024-1",
+      "nota_final": 3.9,
+      "estado": "Reprobado"
+    }
+  ]
+},
+{
+  "_id": "est03",
+  "rut": "21.444.221-9",
+  "nombre": "María Pino",
+  "correo": "maria.pino@alumnos.edu",
+  "telefono": "+56988776655",
+  "carrera_id": "car01",
+  "metodo_pago": "Débito automático",
+  "beca": "Fondo Solidario",
+  "estado_morosidad": "Atrasado",
+  "horario": [
+    {
+      "asignatura_id": "asi06",
+      "asignatura": "Introducción a la Administración",
+      "dia": "Lunes",
+      "hora_inicio": "18:00",
+      "hora_termino": "20:00",
+      "sala": "ADM-304",
+      "docente_id": "doc03"
+    },
+    {
+      "asignatura_id": "asi03",
+      "asignatura": "Gestión Financiera",
+      "dia": "Jueves",
+      "hora_inicio": "16:00",
+      "hora_termino": "18:00",
+      "sala": "ADM-202",
+      "docente_id": "doc03"
+    }
+  ],
+  "historial_academico": [
+    {
+      "asignatura_id": "asi06",
+      "nombre": "Introducción a la Administración",
+      "semestre": "2023-2",
+      "nota_final": 6.2,
+      "estado": "Aprobado"
+    },
+    {
+      "asignatura_id": "asi03",
+      "nombre": "Gestión Financiera",
+      "semestre": "2024-1",
+      "nota_final": null,
+      "estado": "Cursando"
+    },
+    {
+      "asignatura_id": "asi02",
+      "nombre_asignatura": "Desarrollo Web",
+      "evaluacion": "Final",
+      "nota": 5.9,
+      "fecha": {
+        "$date": "2025-12-15T20:42:13.429Z"
+      }
+    }
+  ]
+},
+{
+  "_id": "est06",
+  "rut": "12.345.678-9",
+  "nombres": "Ana",
+  "apellidos": "Gómez",
+  "correo": "ana@gmail.com",
+  "carrera_id": "car01",
+  "estado_morosidad": "al día",
+  "horario": [
+    {
+      "asignatura_id": "asi01",
+      "nombre_asignatura": "Base de Datos",
+      "dia": "Lunes",
+      "bloque": "3-4",
+      "docente_id": "pro01"
+    }
+  ],
+  "historial_academico": [
+    {
+      "asignatura_id": "asi01",
+      "nombre_asignatura": "Base de Datos",
+      "evaluacion": "Parcial 1",
+      "nota": 5.5,
+      "fecha": {
+        "$date": "2025-10-10T00:00:00.000Z"
+      }
+    }
+  ]
+}]

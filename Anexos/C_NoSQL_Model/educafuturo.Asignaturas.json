@@ -1,0 +1,60 @@
+[{
+  "_id": "asi01",
+  "nombre": "Programación I",
+  "carrera_id": "car02",
+  "semestre": 2
+},
+{
+  "_id": "asi02",
+  "nombre": "Anatomía Humana",
+  "carrera_id": "car03",
+  "semestre": 1
+},
+{
+  "_id": "asi03",
+  "nombre": "Desarrollo Web",
+  "carrera_id": "car01",
+  "semestre": 3
+},
+{
+  "_id": "asi04",
+  "nombre": "Desarrollo Web",
+  "carrera_id": "car04",
+  "semestre": 1
+},
+{
+  "_id": "asi05",
+  "nombre": "Bases de Datos I",
+  "carrera_id": "car08",
+  "semestre": 2
+},
+{
+  "_id": "asi06",
+  "nombre": "Introducción a la Administración",
+  "carrera_id": "car01",
+  "semestre": 1
+},
+{
+  "_id": "asi07",
+  "nombre": "Marketing Digital",
+  "carrera_id": "car07",
+  "semestre": 4
+},
+{
+  "_id": "asi08",
+  "nombre": "Base de Datos",
+  "semestre": 3,
+  "carrera_id": "car09"
+},
+{
+  "_id": "asi09",
+  "nombre": "Programación Web",
+  "semestre": 4,
+  "carrera_id": "car02"
+},
+{
+  "_id": "asi10",
+  "nombre": "Programación II",
+  "semestre": 1,
+  "carrera_id": "car01"
+}]

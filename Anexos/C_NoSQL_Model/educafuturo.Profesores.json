@@ -1,0 +1,69 @@
+[{
+  "_id": "doc01",
+  "nombre": "Paula Molina",
+  "especialidad": "Programación",
+  "contrato": "Honorarios",
+  "asignaturas": [
+    "asi01",
+    "asi05"
+  ],
+  "sueldo": 750000,
+  "años_experiencia": 6,
+  "experiencia_detallada": [
+    "Desarrollo backend",
+    "Bases de datos",
+    "Aplicaciones web"
+  ]
+},
+{
+  "_id": "doc02",
+  "nombre": "Rodrigo Herrera",
+  "especialidad": "Enfermería",
+  "contrato": "Part Time",
+  "asignaturas": [
+    "asi02"
+  ],
+  "sueldo": 1200000,
+  "años_experiencia": 12,
+  "experiencia_detallada": [
+    "Anatomía humana",
+    "Urgencias médicas",
+    "Prácticas clínicas"
+  ]
+},
+{
+  "_id": "doc03",
+  "nombre": "Claudia Urrutia",
+  "especialidad": "Administración",
+  "contrato": "Part Time",
+  "asignaturas": [
+    "asi06",
+    "asi07",
+    "asi02"
+  ],
+  "sueldo": 620000,
+  "años_experiencia": 8,
+  "experiencia_detallada": [
+    "Marketing",
+    "Gestión organizacional",
+    "Emprendimiento"
+  ]
+},
+{
+  "_id": "doc04",
+  "nombre": "Sebastián Fuentes",
+  "especialidad": "Redes y Telecomunicaciones",
+  "contrato": "Indefinido",
+  "fecha_contrato": "2022-05-10",
+  "sueldo": 980000,
+  "años_experiencia": 7,
+  "experiencia_detallada": [
+    "Infraestructura de redes",
+    "Configuración Cisco",
+    "Seguridad de redes"
+  ],
+  "asignaturas": [
+    "asi08",
+    "asi09"
+  ]
+}]

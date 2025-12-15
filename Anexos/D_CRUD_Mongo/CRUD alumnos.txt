@@ -1,0 +1,58 @@
+--CREATE--
+db.Alumnos.insertOne({
+  _id: "est06",
+  rut: "12.345.678-9",
+  nombres: "Ana",
+  apellidos: "Gómez",
+  correo: "ana@gmail.com",
+  carrera_id: "car01",
+  estado_morosidad: false,
+  horario: [
+    { asignatura_id: "asi01", nombre_asignatura: "Base de Datos", dia: "Lunes", bloque: "3-4", docente_id: "pro01" }
+  ],
+  historial_academico: [
+    { asignatura_id: "asi01", nombre_asignatura: "Base de Datos", evaluacion: "Parcial 1", nota: 5.5, fecha: new Date("2025-10-10") }
+  ]
+});
+
+db.Alumnos.insertOne({
+  _id: "est07",
+  rut: "11.222.333-4",
+  nombres: "Diego",
+  apellidos: "Rojas",
+  correo: "diego@gmail.com",
+  carrera_id: "car01",
+  estado_morosidad: true,
+  horario: [
+    { asignatura_id: "asi02", nombre_asignatura: "Desarrollo Web", dia: "Martes", bloque: "1-2", docente_id: "pro02" }
+  ],
+  historial_academico: [
+    { asignatura_id: "asi02", nombre_asignatura: "Desarrollo Web", evaluacion: "Parcial 1", nota: 4.8, fecha: new Date("2025-10-12") }
+  ]
+});
+
+--READ--
+db.Alumnos.findOne({ _id: "est06" });
+
+db.Alumnos.find({ estado_morosidad: true }, { _id: 1, rut: 1, nombres: 1, apellidos: 1, carrera_id: 1 });
+
+--UPDATE--
+db.Alumnos.updateOne({ _id: "est06" }, { $set: { estado_morosidad: true } });
+
+db.Alumnos.updateOne(
+  { _id: "est07" },
+  { $push: { historial_academico: {
+      asignatura_id: "asi02",
+      nombre_asignatura: "Desarrollo Web",
+      evaluacion: "Final",
+      nota: 5.9,
+      fecha: new Date()
+  }}}
+);
+
+--DELETE--
+db.Alumnos.deleteOne({ _id: "est07" });
+
+db.Alumnos.deleteOne({ _id: "est06" });
+
+

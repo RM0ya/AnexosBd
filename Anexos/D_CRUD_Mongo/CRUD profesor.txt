@@ -1,0 +1,33 @@
+--CREATE
+db.Profesores.insertOne({
+  _id: "doc01",
+  nombres: "Carlos",
+  apellidos: "Pérez",
+  contrato: "Planta",
+  especialidad: "Bases de Datos",
+  asignaturas: ["asi01"]
+});
+
+db.Profesores.insertOne({
+  _id: "doc02",
+  nombres: "María",
+  apellidos: "Soto",
+  contrato: "Honorarios",
+  especialidad: "Desarrollo Web",
+  asignaturas: ["asi02"]
+});
+
+--READ--
+db.Profesores.findOne({ _id: "doc02" });
+
+db.Profesores.find({ contrato: "Honorarios" }, { _id: 1, nombres: 1, apellidos: 1, asignaturas: 1 });
+
+--UPDATE--
+db.Profesores.updateOne({ _id: "doc01" }, { $addToSet: { asignaturas: "asi02" } });
+
+db.Profesores.updateOne({ _id: "doc02" }, { $set: { contrato: "Planta" } });
+
+--DELETE--
+db.Profesores.deleteOne({ _id: "doc01" });
+
+db.Profesores.deleteOne({ _id: "doc02" });

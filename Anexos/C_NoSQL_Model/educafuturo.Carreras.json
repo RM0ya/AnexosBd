@@ -1,0 +1,66 @@
+[{
+  "_id": "car01",
+  "nombre": "Administración de Empresas",
+  "duracion_semestres": 4,
+  "sede": "Providencia"
+},
+{
+  "_id": "car02",
+  "nombre": "Técnico en Informática",
+  "duracion_semestres": 6,
+  "sede": "La Cisterna"
+},
+{
+  "_id": "car03",
+  "nombre": "Enfermería",
+  "duracion_semestres": 7,
+  "sede": "Puente Alto"
+},
+{
+  "_id": "car04",
+  "nombre": "Construcción",
+  "duracion_semestres": 4,
+  "sede": "San Bernardo"
+},
+{
+  "_id": "car05",
+  "nombre": "Prevención de Riesgos",
+  "duracion_semestres": 4,
+  "sede": "La Cisterna"
+},
+{
+  "_id": "car06",
+  "nombre": "Educación de Párvulos",
+  "duracion_semestres": 5,
+  "sede": "Puente Alto"
+},
+{
+  "_id": "car07",
+  "nombre": "Diseño Gráfico",
+  "duracion_semestres": 5,
+  "sede": "San Bernardo"
+},
+{
+  "_id": "car08",
+  "nombre": "Programación y Análisis de Sistemas",
+  "duracion_semestres": 5,
+  "sede": "La Cisterna"
+},
+{
+  "_id": "car09",
+  "nombre": "Ingeniería Informática",
+  "duracion_semestres": 8,
+  "sede": "San Joaquín"
+},
+{
+  "_id": "car10",
+  "nombre": "Analista Programador",
+  "duracion_semestres": 4,
+  "sede": "Maipú"
+},
+{
+  "_id": "car11",
+  "nombre": "Contabilidad General",
+  "duracion_semestres": 6,
+  "sede": "San Joaquín"
+}]
